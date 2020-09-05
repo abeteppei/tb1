@@ -3,7 +3,7 @@
 	$user = 'ユーザー名';
 	$password = 'パスワード';
 	$pdo = new PDO($dsn, $user, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
-//4-2	
+
 	$sql = "CREATE TABLE IF NOT EXISTS tbtest"
 	." ("
 	. "id INT AUTO_INCREMENT PRIMARY KEY,"
@@ -37,9 +37,9 @@ if($_POST['button2']!=null&&$_POST['editnum']!=null){
     $id=$_POST['editnum'];
     
     $sql = 'SELECT * FROM tbtest WHERE id='.$id;
-    $stmt = $pdo->prepare($sql);                  // ←差し替えるパラメータを含めて記述したSQLを準備し、
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT); // ←その差し替えるパラメータの値を指定してから、
-    $stmt->execute();                             // ←SQLを実行する。
+    $stmt = $pdo->prepare($sql);                  
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT); 
+    $stmt->execute();                             
     $results = $stmt->fetchAll(); 
     
 	foreach($results as $row){
@@ -54,9 +54,9 @@ if($_POST['button2']!=null&&$_POST['editnum']!=null){
 //編集
 if($_POST['hidden']!=null&&$_POST['button1']!=null&&$_POST['name']!=null&&$_POST['str']!=null){
     
-    $id = $_POST['hidden']; //変更する投稿番号
+    $id = $_POST['hidden']; 
 	$name = $_POST['name'];
-	$comment = $_POST['str']; //変更したい名前、変更したいコメントは自分で決めること
+	$comment = $_POST['str']; 
 	$sql = 'UPDATE tbtest SET name=:name,comment=:comment WHERE id=:id';
 	$stmt = $pdo->prepare($sql);
 	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -70,9 +70,9 @@ if($_POST['button3']!=null&&$_POST['delete']!=null){
     $xxx=$_POST['xxx'];
     
 $sql = 'SELECT * FROM tbtest WHERE id='.$deleteNum;
-    $stmt = $pdo->prepare($sql);                  // ←差し替えるパラメータを含めて記述したSQLを準備し、
-    $stmt->bindParam(':id', $deleteNum, PDO::PARAM_INT); // ←その差し替えるパラメータの値を指定してから、
-    $stmt->execute();                             // ←SQLを実行する。
+    $stmt = $pdo->prepare($sql);                  
+    $stmt->bindParam(':id', $deleteNum, PDO::PARAM_INT); 
+    $stmt->execute();                             
     $results = $stmt->fetchAll(); 
     
     foreach($results as $row){
@@ -92,7 +92,7 @@ $sql = 'SELECT * FROM tbtest';
 $stmt = $pdo->query($sql);
 $results = $stmt->fetchAll();
 foreach ($results as $row){
-	//$rowの中にはテーブルのカラム名が入る
+	
 	echo $row['id'].',';
 	echo $row['name'].',';
 	echo $row['comment'].',';
@@ -100,7 +100,7 @@ foreach ($results as $row){
 	echo "<hr>";
 	    
 	}
-	//テーブル削除
+	
 	if($_POST['omg']!=null&&$_POST['xxx']==999999999){
 	    $sql = 'DROP TABLE tbtest';
 		$stmt = $pdo->query($sql);
